@@ -180,4 +180,26 @@ class BigHView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BigHView) {
+
+        private val animator : Animator = Animator(view)
+        private val bigh : BigH = BigH(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            bigh.draw(canvas, paint)
+            animator.animate {
+                bigh.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bigh.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
