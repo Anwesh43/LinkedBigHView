@@ -204,4 +204,13 @@ class BigHView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BigHView {
+            val view : BigHView = BigHView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
