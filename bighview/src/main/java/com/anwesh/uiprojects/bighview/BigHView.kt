@@ -16,7 +16,6 @@ import android.graphics.RectF
 val colors : Array<String> = arrayOf("#3F51B5", "#F44336", "#2196F3", "#009688", "#673AB7")
 val parts : Int = 3
 val scGap : Float = 0.02f / parts
-val strokeFactor : Int = 90
 val sizeFactor : Float = 5.9f
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Long = 20
@@ -56,14 +55,16 @@ fun Canvas.drawBHNode(i : Int, scale : Float, paint : Paint) {
 
 class BigHView(ctx : Context) : View(ctx) {
 
-    override fun onDraw(canvas : Canvas) {
+    private val renderer : Renderer = Renderer(this)
 
+    override fun onDraw(canvas : Canvas) {
+        renderer.render(canvas)
     }
 
     override fun onTouchEvent(event : MotionEvent) : Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
@@ -185,8 +186,9 @@ class BigHView(ctx : Context) : View(ctx) {
 
         private val animator : Animator = Animator(view)
         private val bigh : BigH = BigH(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-        fun render(canvas : Canvas, paint : Paint) {
+        fun render(canvas : Canvas) {
             canvas.drawColor(backColor)
             bigh.draw(canvas, paint)
             animator.animate {
