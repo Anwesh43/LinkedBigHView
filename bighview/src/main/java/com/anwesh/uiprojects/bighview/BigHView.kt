@@ -37,7 +37,7 @@ fun Canvas.drawBigH(i : Int, scale : Float, w : Float, h : Float, paint : Paint)
         drawRect(0f, 0f, size, (h / 2 - size / 2) * sf.divideScale(j * 2, parts), paint)
         restore()
     }
-    drawRect(RectF(0f, -size / 2, (w / 2) * sf2, size / 2), paint)
+    drawRect(RectF(-w / 2, -size / 2, -w / 2 + (w / 2) * sf2, size / 2), paint)
     restore()
 }
 
